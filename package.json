@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "server/server.js",
   "scripts": {
-  "lint": "eslint .",
-  "start": "node .",
-  "posttest": "npm run lint && nsp check"
+    "lint": "eslint .",
+    "start": "node .",
+    "posttest": "npm run lint && nsp check",
+    "db": "mongod --dbpath ./data --port 27018"
   },
   "dependencies": {
     "apollo-server": "^0.3.2",
