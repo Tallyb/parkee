@@ -1,12 +1,11 @@
 'use strict';
 
 var apollo = require('apollo-server');
-//import {apolloExpress} from 'apollo-server';
 var gqlTools = require ('graphql-tools');
 var bodyParser = require ('body-parser');
-//import {makeExecutableSchema} from 'graphql-tools';
 
 var _ = require('lodash');
+var s = require ('../graphql-schema.js');
 
 module.exports = function(app, cb) {
   /*
@@ -17,6 +16,7 @@ module.exports = function(app, cb) {
    * for more info.
    */
 
+  console.log ('NOTE1', app.models.note);
   const typeDefs = [`
     schema {
       query: RootQuery
@@ -36,11 +36,5 @@ module.exports = function(app, cb) {
     endpointURL: '/graphql',
   }));
   app.use(router);
-  //app.use('/graphql', bodyParser.json(), apollo.apolloExpress({schema: schema}));
-
-  _.forEach(app.models, m => {
-    console.log (m.modelName);
-  });
-  console.log('Models:', app.models);
   process.nextTick(cb); // Remove if you pass `cb` to an async function yourself
 };
