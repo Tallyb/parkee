@@ -1,0 +1,15 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "parkee": {
+    "host": "localhost",
+    "port": 27018,
+    "database": "local",
+    "password": "toto",
+    "name": "parkee",
+    "connector": "mongodb",
+    "user": "tally"
+  }
+}
