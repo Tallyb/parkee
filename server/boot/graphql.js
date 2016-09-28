@@ -1,3 +1,5 @@
+'use strict';
+
 var apollo = require('apollo-server');
 var _ = require('lodash');
 
@@ -10,16 +12,15 @@ module.exports = function(app, cb) {
    * for more info.
    */
 
-  let router = server.loopback.Router();
+  //let router = server.loopback.Router();
   //router.get('/graphql', server.loopback.status());
   //server.use(router);
   //app.use('/graphql', bodyParser.json(), apollo.apolloExpress({schema: schema}));
 
-  console.log ('SOUCES', app.datasources)
   console.log ('MODELS', app.models)
   _.forEach(app.models, m => {
     console.log (m.modelName)
   }); 
-  console.log('Models:', models);
+  console.log('Models:', app.models);
   process.nextTick(cb); // Remove if you pass `cb` to an async function yourself
 };
