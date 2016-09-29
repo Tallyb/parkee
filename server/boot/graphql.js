@@ -5,24 +5,16 @@ var gqlTools = require ('graphql-tools');
 var bodyParser = require ('body-parser');
 
 var _ = require('lodash');
-var s = require ('../graphql-schema.js');
+var gqlSchema = require ('../graphql-schema.js');
 
-module.exports = function(app, cb) {
-  /*
-   * The `app` object provides access to a variety of LoopBack resources such as
-   * models (e.g. `app.models.YourModelName`) or data sources (e.g.
-   * `app.datasources.YourDataSource`). See
-   * http://docs.strongloop.com/display/public/LB/Working+with+LoopBack+objects
-   * for more info.
-   */
-
-  console.log ('NOTE1', app.models.note);
-  const typeDefs = [`
+module.exports = function(app) {
+  let typeDefs = [`
+    scalar Date
+    ${gqlSchema.generateEnums(app.models())}
+    ${gqlSchema.generateTypeDefs(app.models())}
+    type Query { ${gqlSchema.generateQueries(app.models())} }
     schema {
-      query: RootQuery
-    }
-    type RootQuery {
-      aNumber: Int
+      query: Query
     }
     `];
   let schema = gqlTools.makeExecutableSchema ({
@@ -36,5 +28,4 @@ module.exports = function(app, cb) {
     endpointURL: '/graphql',
   }));
   app.use(router);
-  process.nextTick(cb); // Remove if you pass `cb` to an async function yourself
 };

@@ -1,7 +1,7 @@
 {
   "name": "Request",
   "plural": "Requests",
-  "base": "Application",
+  "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
@@ -18,6 +18,10 @@
     "end": {
       "type": "date",
       "required": true
+    },
+    "size": {
+      "type": "string",
+      "enum": ["Small", "Medium", "Large"]
     }
   },
   "validations": [],

@@ -18,7 +18,17 @@
     "end": {
       "type": "date",
       "required": true
+    },
+    "active": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "places": {
+      "type": "number",
+      "required": true
     }
+
   },
   "validations": [],
   "relations": {
