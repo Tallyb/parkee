@@ -4,22 +4,33 @@ var apollo = require('apollo-server');
 var gqlTools = require('graphql-tools');
 var bodyParser = require('body-parser');
 
-//var _ = require('lodash');
+var _ = require('lodash');
 var gqlSchema = require('./schema.js');
+var gqlResolvers = require('./resolvers.js');
 
-module.exports = function graphql (app, noGraphiql) {
+module.exports = function graphql(app, noGraphiql) {
+    //Need to filter only the public models
+    const models = _.filter(app.models(), m => {
+        return true;
+    });
     let typeDefs = [`
     scalar Date
-    ${gqlSchema.generateEnums(app.models())}
-    ${gqlSchema.generateTypeDefs(app.models())}
-    type Query { ${gqlSchema.generateQueries(app.models())} }
+    ${gqlSchema.generateEnums(models)}
+    ${gqlSchema.generateTypeDefs(models)}
+    type Query { ${gqlSchema.generateQueries(models)} }
     schema {
       query: Query
     }
     `];
+
+    let resolvers = gqlResolvers.generateResolvers(models);
+    console.log(resolvers);
     let schema = gqlTools.makeExecutableSchema({
         typeDefs,
-        resolvers: {}
+        resolvers,
+        resolverValidationOptions: {
+            requireResolversForAllFields: false
+        }
     });
 
     let router = app.loopback.Router();

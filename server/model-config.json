@@ -36,11 +36,9 @@
     "dataSource": "parkee"
   },
   "Request": {
-    "dataSource": "parkee",
-    "public": true
+    "dataSource": "parkee"
   },
   "Parking": {
-    "dataSource": "parkee",
-    "public": true
+    "dataSource": "parkee"
   }
 }
