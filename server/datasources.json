@@ -5,11 +5,9 @@
   },
   "parkee": {
     "host": "localhost",
-    "port": 27018,
+    "port": 27017,
     "database": "local",
-    "password": "toto",
     "name": "parkee",
-    "connector": "mongodb",
-    "user": "tally"
+    "connector": "mongodb"
   }
 }

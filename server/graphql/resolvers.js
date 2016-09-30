@@ -24,9 +24,25 @@ const typeResolvers = {
 function generateResolvers(models) {
     let rootResolvers = {};
     _.forEach(models, m => {
-        rootResolvers[m.pluralModelName] = Promise.promisify(m.find);
+        rootResolvers[m.pluralModelName] = (obj, args, context) => {
+            console.log ('CONTEXT', context)
+            console.log ('ARGS', args)
+            return m.find(args).then( res => {
+                return res;
+            });
+        };
     });
-    return _.extend(typeResolvers, {Query: rootResolvers});
+
+    let typeResolvers = {}; 
+    _.forEach(models, m => {
+        typeResolvers[m.modelName] = (obj, args, context) => {
+            console.log ('MODEL CONTEXT', context)
+            console.log ('MODEL ARGS', args)
+            return m.findById(obj.id);
+        };
+    });
+
+    return _.extend(typeResolvers, {Query: rootResolvers}, typeResolvers);
 }
 module.exports = {
     generateResolvers
