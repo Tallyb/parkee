@@ -29,7 +29,15 @@ const mapModel = (model) => {
         return !p.deprecated ? `${key}: ${type}${req} ` : '';
     });
 
-    return `type ${model.modelName} { ${props.join('\n ')} }`;
+    let rels = _.map(model.relations, (r, key) => {
+        let i = r.multiple ? `${r.name}: [${r.modelTo.modelName}]` : `${r.name}: ${r.modelTo.modelName}`;
+        return i;
+    });
+
+    return `type ${model.modelName} {
+         ${props.join('\n ')}
+         ${rels.join('\n ')}    
+        }`;
 };
 
 function generateTypeDefs(models) {
@@ -43,6 +51,7 @@ function generateQueries(models) {
         return `${m.pluralModelName}: [${m.modelName}]`;
     }).join('\n');
 }
+
 module.exports = {
     generateEnums,
     generateQueries,

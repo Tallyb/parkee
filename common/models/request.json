@@ -18,14 +18,16 @@
     "end": {
       "type": "date",
       "required": true
-    },
-    "size": {
-      "type": "string",
-      "enum": ["Small", "Medium", "Large"]
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "parking": {
+      "type": "belongsTo",
+      "model": "Parking",
+      "foreignKey": "parkingId"
+    }
+  },
   "acls": [],
   "methods": {}
 }

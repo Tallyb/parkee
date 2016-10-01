@@ -1,7 +1,6 @@
 'use strict';
 
 var _ = require('lodash');
-var Promise = require('bluebird');
 var gqlLang = require('graphql/language');
 
 const typeResolvers = {
@@ -22,6 +21,7 @@ const typeResolvers = {
 };
 
 function generateResolvers(models) {
+
     let rootResolvers = {};
     _.forEach(models, m => {
         rootResolvers[m.pluralModelName] = (obj, args, context) => {
@@ -33,16 +33,17 @@ function generateResolvers(models) {
         };
     });
 
-    let typeResolvers = {}; 
+    let modelResolvers = {}; 
     _.forEach(models, m => {
         typeResolvers[m.modelName] = (obj, args, context) => {
+            console.log ('MODEL OBJ', obj)
             console.log ('MODEL CONTEXT', context)
             console.log ('MODEL ARGS', args)
             return m.findById(obj.id);
         };
     });
 
-    return _.extend(typeResolvers, {Query: rootResolvers}, typeResolvers);
+    return _.extend(typeResolvers, {Query: rootResolvers}, modelResolvers);
 }
 module.exports = {
     generateResolvers

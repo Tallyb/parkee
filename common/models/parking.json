@@ -11,31 +11,35 @@
       "type": "string",
       "required": true
     },
-    "start": {
-      "type": "date",
-      "required": true
-    },
-    "end": {
-      "type": "date",
-      "required": true
-    },
     "active": {
       "type": "boolean",
       "required": true,
       "default": true
     },
+    "size": {
+      "type": "string",
+      "enum": [
+        "Small",
+        "Medium",
+        "Large"
+      ]
+    },
     "places": {
       "type": "number",
       "required": true
     }
-
   },
   "validations": [],
   "relations": {
-    "parking_id": {
-      "type": "hasAndBelongsToMany",
+    "owner": {
+      "type": "belongsTo",
       "model": "User",
-      "foreignKey": ""
+      "foreignKey": "ownerId"
+    },
+    "requests": {
+      "type": "hasMany",
+      "model": "Request",
+      "foreignKey": "parkingId"
     }
   },
   "acls": [],
