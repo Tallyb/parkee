@@ -25,6 +25,7 @@ module.exports = function graphql(app, noGraphiql) {
     `];
 
     let resolvers = modelResolvers.generateResolvers(models);
+    console.log (resolvers)
     let schema = gqlTools.makeExecutableSchema({
         typeDefs,
         resolvers,

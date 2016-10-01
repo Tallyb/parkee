@@ -20,31 +20,47 @@ const typeResolvers = {
     }
 };
 
-function generateResolvers(models) {
-
-    let rootResolvers = {};
+function generateRootResolvers(models) {
+    let resolvers = {};
     _.forEach(models, m => {
-        rootResolvers[m.pluralModelName] = (obj, args, context) => {
-            console.log ('CONTEXT', context)
-            console.log ('ARGS', args)
-            return m.find(args).then( res => {
+        resolvers[m.pluralModelName] = (obj, args, context) => {
+            console.log('CONTEXT', context);
+            console.log('ARGS', args);
+            return m.find(args).then(res => {
                 return res;
             });
         };
     });
+    return { Query: resolvers };
+}
 
-    let modelResolvers = {}; 
+function generateModelResolvers(models) {
+    let resolvers = {};
     _.forEach(models, m => {
-        typeResolvers[m.modelName] = (obj, args, context) => {
-            console.log ('MODEL OBJ', obj)
-            console.log ('MODEL CONTEXT', context)
-            console.log ('MODEL ARGS', args)
+        resolvers[m.modelName] = (obj, args, context) => {
+            console.log('MODEL OBJ', obj);
+            console.log('MODEL CONTEXT', context);
+            console.log('MODEL ARGS', args);
             return m.findById(obj.id);
         };
+        let resolver = {};
+        _.forEach(m.relations, r => {
+            resolver[r.name] = (obj, args, context) => {
+                console.log('REL OBJ', obj);
+                console.log('REL CONTEXT', context);
+                console.log('REL ARGS', args);
+                return r.modelTo.all();
+            };
+        });
+        resolvers[m.modelName] = resolver;
     });
-
-    return _.extend(typeResolvers, {Query: rootResolvers}, modelResolvers);
+    return resolvers;
 }
+
+function generateResolvers(models) {
+    return _.merge(typeResolvers, generateRootResolvers(models), generateModelResolvers(models));
+}
+
 module.exports = {
     generateResolvers
 };
