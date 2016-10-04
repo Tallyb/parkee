@@ -48,7 +48,10 @@ function generateTypeDefs(models) {
 
 function generateQueries(models) {
     return _.map(models, m => {
-        return `${m.pluralModelName}: [${m.modelName}]`;
+        return `
+            ${m.pluralModelName}: [${m.modelName}]
+            ${m.modelName}: ${m.modelName}
+        `;
     }).join('\n');
 }
 
