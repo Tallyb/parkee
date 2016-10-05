@@ -8,6 +8,8 @@ const mapEnums = (model) => {
     });
 };
 
+const pagination = '(first: Int, after: Int)';
+
 function generateEnums(models) {
     return _.map(models, m => {
         return mapEnums(m);
@@ -30,7 +32,7 @@ const mapModel = (model) => {
     });
 
     let rels = _.map(model.relations, (r, key) => {
-        let i = r.multiple ? `${r.name}: [${r.modelTo.modelName}]` : `${r.name}: ${r.modelTo.modelName}`;
+        let i = r.multiple ? `${r.name} ${pagination}: [${r.modelTo.modelName}]` : `${r.name}: ${r.modelTo.modelName}`;
         return i;
     });
 
@@ -49,7 +51,7 @@ function generateTypeDefs(models) {
 function generateQueries(models) {
     return _.map(models, m => {
         return `
-            ${m.pluralModelName}: [${m.modelName}]
+            ${m.pluralModelName} ${pagination}: [${m.modelName}]
             ${m.modelName}: ${m.modelName}
         `;
     }).join('\n');

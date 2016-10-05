@@ -24,17 +24,13 @@ function generateRootResolvers(models) {
     let resolvers = {};
     _.forEach(models, m => {
         resolvers[m.pluralModelName] = (obj, args, context) => {
-            console.log('CONTEXT', context);
-            console.log('ARGS', args);
-            return m.find(args).then(res => {
+            return m.find({skip: args.after, limit: args.first}).then(res => {
                 return res;
             });
         };
     });
     _.forEach(models, m => {
         resolvers[m.modelName] = (obj, args, context) => {
-            console.log('CONTEXT', context);
-            console.log('ARGS', args);
             return m.findOne(args).then(res => {
                 return res;
             });
@@ -54,7 +50,7 @@ function generateModelResolvers(models) {
             resolver[r.name] = (obj, args, context) => {
                 let query = {};
                 query[r.keyTo] = obj[r.keyFrom];
-                return r.modelTo.find({where: query}).then(res => {
+                return r.modelTo.find({where: query, skip: args.after, limit: args.first}).then(res => {
                     return res;
                 });
             };
