@@ -12,5 +12,30 @@
   "validations": [],
   "relations": {},
   "acls": [],
-  "methods": {}
+  "methods": {
+    "try": {
+      "isStatic": true,
+      "accepts": [],
+      "returns": [],
+      "description": "test json",
+      "http": [
+        {
+          "path": "/try",
+          "verb": "get"
+        }
+      ]
+    },
+    "try2": {
+      "isStatic": true,
+      "accepts": [],
+      "returns": [],
+      "description": "test json",
+      "http": [
+        {
+          "path": "/try2",
+          "verb": "post"
+        }
+      ]
+    }
+  }
 }

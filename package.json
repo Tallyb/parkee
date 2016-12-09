@@ -5,8 +5,7 @@
   "scripts": {
     "lint": "eslint .",
     "start": "node .",
-    "posttest": "npm run lint && nsp check",
-    "db": "mongod --dbpath ./data --port 27018"
+    "posttest": "npm run lint && nsp check"
   },
   "dependencies": {
     "apollo-server": "^0.3.2",
