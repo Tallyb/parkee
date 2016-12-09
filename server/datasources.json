@@ -6,7 +6,7 @@
   "parkee": {
     "host": "localhost",
     "port": 27017,
-    "database": "local",
+    "database": "Parkee",
     "name": "parkee",
     "connector": "mongodb"
   }
